@@ -59,6 +59,6 @@
 					 		 '".$jpg."' )";
 
 	$resultado = $conexion->query($sentenciaSQL);
-	if(!$resultado) echo "error en la introduccion";
-	else echo "introduccion correcta";
+	if(!$resultado) echo "<script>alert('Error ha introducir el cliente.'); document.location=('./indexEmpleadoAJAX.php');</script>";
+	else echo "<script>alert('El cliente se ha introducido correctamente.'); document.location=('./indexEmpleadoAJAX.php');</script>";
  ?>

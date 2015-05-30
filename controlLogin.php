@@ -17,6 +17,7 @@
 		$user = $fila['Usuario'];
 		$pass = $fila['Password'];
 		$permisos = $fila['Tipo'];
+		$foto = $fila['Fotografia'];
 	}
 
 	if(strcmp($usuario, $user)==0 && strcmp($password, $pass)==0 && $permisos=="Empleado")
@@ -28,8 +29,26 @@
 		//usuario y contraseya es valida
 		//definimos una sesion y guardo datos
 		session_start();
+
+
+		$foto = $fila['Fotografia'];
+
+		//Cremoas un archivo WWW con el nombre temp
+		$imagen=basename(tempnam(getcwd()."temporales","temp"));
+
+		//Añadimos la extension jpg al fichero
+		$imagen.=".jpg";
+
+		//abrimos el fichero con permisos de escritura
+		$fichero=fopen("temporales/".$imagen,"w");
+
+		//Escribimos en el fichero el contenido del campo de la base de datos
+		fwrite($fichero,$foto);
+		fclose($fichero);
 		$_SESSION["autentificado"] = "SI";
-		header("Location: menuEmpleado.php");
+		$_SESSION["nameLogin"] = $usuario;
+		$_SESSION["fotoLogin"] = $imagen;
+		header("Location: indexEmpleadoAJAX.php");
 		break;
 	}
 
@@ -43,7 +62,8 @@
 		//definimos una sesion y guardo datos
 		session_start();
 		$_SESSION["autentificado"] = "SI";
-		header("Location: menuAdministrador.php");
+		$_SESSION["nameLogin"] = $usuario;
+		header("Location: indexAdmin.php");
 		break;
 	}
 

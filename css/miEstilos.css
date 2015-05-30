@@ -1,3 +1,27 @@
 #tabla{
-	margin-top: -100px;
+	margin-top: -30px;
+	width: 200px;
+}
+
+
+#fecha{
+	color: red;
+	padding: 15px 50px 5px 50px;
+	float: right;
+	font-size: 16px;
+}
+
+.col-md-5{
+	margin-top: 5px;
+}
+
+.input-group .form-control:first-child, .input-group-addon:first-child, .input-group-btn:first-child > .btn, .input-group-btn:first-child > .btn-group > .btn, .input-group-btn:first-child > .dropdown-toggle, .input-group-btn:last-child > .btn:not(:last-child):not(.dropdown-toggle), .input-group-btn:last-child > .btn-group:not(:last-child) > .btn {
+height: 50px;
+}
+
+#page-wrapper {
+  margin: 0 0 0 260px;
+  padding: 15px 30px;
+  min-height: 500px;
+  display: none;
 }
