@@ -46,3 +46,17 @@ height: 50px;
   min-height: 500px;
   display: none;
 }
+
+#login{
+  background-color: white;
+  opacity: 0.9;
+  text-align: center;
+  border-collapse: collapse;
+  text-align: center;
+  border-radius: 10px;
+  padding: 30px;
+  margin-top: 50px;
+}
+#fondo{
+  background-image: url("../img/titanic.jpg");
+}

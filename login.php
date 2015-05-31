@@ -6,6 +6,7 @@
 	<title>Login</title>
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/miEstilos.css">
 
 
 
@@ -27,10 +28,10 @@
 	</script>
 
 </head>
-<body class="text-center" onLoad="msgError()">
-	<h1>Inicio de sesion</h1>
+<body class="text-center" onLoad="msgError()" id="fondo">
 	<div class="container">
-		<form class="form-horizontal" method="POST" action="controlLogin.php">
+		<form class="form-horizontal" id="login" method="POST" action="controlLogin.php">
+			<h1>Inicio de sesión</h1>
 		  <div class="form-group">
 		    <label class="col-sm-3 control-label">Usuario</label>
 		    <div class="col-sm-5">
