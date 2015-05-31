@@ -46,6 +46,7 @@
 		fwrite($fichero,$foto);
 		fclose($fichero);
 		$_SESSION["autentificado"] = "SI";
+		$_SESSION["identificaion"] = $permisos;
 		$_SESSION["nameLogin"] = $usuario;
 		$_SESSION["fotoLogin"] = $imagen;
 		header("Location: indexEmpleadoAJAX.php");
@@ -62,7 +63,9 @@
 		//definimos una sesion y guardo datos
 		session_start();
 		$_SESSION["autentificado"] = "SI";
+		$_SESSION["identificaion"] = $permisos;
 		$_SESSION["nameLogin"] = $usuario;
+		$_SESSION["fotoLogin"] = $imagen;
 		header("Location: indexAdmin.php");
 		break;
 	}

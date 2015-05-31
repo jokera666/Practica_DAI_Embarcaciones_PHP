@@ -1,5 +1,5 @@
 <?php
-header("Content-type: text/xml");
+//header("Content-type: text/xml");
 echo "<?xml version='1.0' encoding='UTF-8'?>";
 $id_cliente = 5;
 $cp = 3300;
@@ -14,7 +14,8 @@ echo '<foto><![CDATA[<center><a href="temporales/'.$imagen.'"><img src="temporal
 echo "</note>";
 
 
-
+	$consulta2 = "SELECT Nombre,Apelldio1,Apellido2 FROM CLIENTES as C, EMBARCACIONES as E WHERE C.Id_Cliente = E.Id_Cliente";
+	echo $consulta2;
 
 
 //<a href="formModificar_clientes.php?idcliente="'.$id_cliente.'"&correo="'.$cp.'"><i class="fa fa-edit fa-2x"/></a>

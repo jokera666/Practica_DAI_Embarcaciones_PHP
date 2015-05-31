@@ -30,5 +30,19 @@ height: 50px;
   margin: 0 0 0 260px;
   padding: 15px 30px;
   min-height: 500px;
-  display: block;
+  display: none;
+}
+
+#page-wrapper2 {
+  margin: 0 0 0 260px;
+  padding: 15px 30px;
+  min-height: 500px;
+  display: none;
+}
+
+#page-wrapper3 {
+  margin: 0 0 0 260px;
+  padding: 15px 30px;
+  min-height: 500px;
+  display: none;
 }

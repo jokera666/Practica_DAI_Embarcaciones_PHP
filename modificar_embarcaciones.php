@@ -2,6 +2,7 @@
 
 	include("conexionPDO.php");
 	include("seguridad.php");
+	$tipo = $_SESSION["identificaion"];
 
 	$matricula = $_POST["matricula"];
 	$inLongitud = $_POST["longitud"];
@@ -51,9 +52,17 @@
 	//echo $sentenciaSQL;
 
 	$resultado = $conexion->query($sentenciaSQL);
-	if(!$resultado) echo "<script>alert('Error al modificar los datos.');  document.location=('./indexEmpleadoAJAX.php'); </script>"; // history.go(-1) va una pagina atras el BACK
-	else echo "<script>alert('Los datos fueron modificados correctamente.'); document.location=('./indexEmpleadoAJAX.php');</script>";
-
+	if(!$resultado)
+	{
+		if($tipo=="Empleado") echo "<script>alert('Error al modificar los datos.');  document.location=('./indexEmpleadoAJAX.php'); </script>";
+		else echo "<script>alert('Error al modificar los datos.');  document.location=('./indexAdmin.php'); </script>";
+	}
+		
+	else
+	{
+		if($tipo=="Empleado") echo "<script>alert('Tus datos fueron modificados correctamente.'); document.location=('./indexEmpleadoAJAX.php');</script>";
+		else echo "<script>alert('Los datos fueron modificados correctamente.'); document.location=('./indexAdmin.php');</script>";
+	}
 	 
 
 

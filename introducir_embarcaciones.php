@@ -1,6 +1,7 @@
 <?php 
 	include("conexionPDO.php");
 	include("seguridad.php");
+	$tipo = $_SESSION["identificaion"];
 
 	$inMatricula = $_POST["matricula"];
 	$inIdcliente = $_POST["nombreCliente"]; //el ID del cliente seleccionado
@@ -45,6 +46,16 @@
 					 		 '".$jpg."' )";
 
 	$resultado = $conexion->query($sentenciaSQL);
-	if(!$resultado) echo "<script>alert('Error ha introducir la embarcacion.'); document.location=('./indexEmpleadoAJAX.php');</script>";
-	else echo "<script>alert('La embarcacion se ha introducido correctamente.'); document.location=('./indexEmpleadoAJAX.php');</script>";
+	if(!$resultado)
+	{
+		if($tipo=="Empleado") echo "<script>alert('Error ha introducir la embarcacion.'); document.location=('./indexEmpleadoAJAX.php');</script>";
+		else echo "<script>alert('Error ha introducir la embarcacion.'); document.location=('./indexAdmin.php');</script>";
+	}
+		
+	else
+	{
+		if($tipo=="Empleado") echo "<script>alert('La embarcacion se ha introducido correctamente.'); document.location=('./indexEmpleadoAJAX.php');</script>";
+		else echo "<script>alert('La embarcacion se ha introducido correctamente.'); document.location=('./indexAdmin.php');</script>";
+	}
+	
  ?>

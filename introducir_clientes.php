@@ -1,5 +1,7 @@
 <?php 
+
 	include("conexionPDO.php");
+	include("seguridad.php");
 	$inDni = $_POST["dni"];
 	$inNombre = $_POST["nombre"];
 	$inApellido1 = $_POST["apellido1"];
@@ -10,6 +12,11 @@
 	$inProvincia = $_POST["provincia"];
 	$inTelefono = $_POST["telefono"];
 	$inEmail = $_POST["email"];
+
+	//lineas necesarias para ver que usuario esta en sesion
+	// y redigirlo en su pagina de menu
+	//session_start();
+	$tipo = $_SESSION["identificaion"];
 
 	// COMPROBACION SI ME LLEGAN TODOS LOS DATOS POR POST
 	/*echo "DNI: ".$inDni."<br />";
@@ -59,6 +66,15 @@
 					 		 '".$jpg."' )";
 
 	$resultado = $conexion->query($sentenciaSQL);
-	if(!$resultado) echo "<script>alert('Error ha introducir el cliente.'); document.location=('./indexEmpleadoAJAX.php');</script>";
-	else echo "<script>alert('El cliente se ha introducido correctamente.'); document.location=('./indexEmpleadoAJAX.php');</script>";
+	if(!$resultado)
+	{
+		if($tipo=="Empleado") echo "<script>alert('Error al introducir el cliente.'); document.location=('./indexEmpleadoAJAX.php');</script>";
+		else echo "<script>alert('Error al introducir el cliente.'); document.location=('./indexEmpleadoAJAX.php');</script>";
+	}
+		
+	else
+	{
+		if($tipo=="Empleado") echo "<script>alert('El cliente se ha introducido correctamente.'); document.location=('./indexEmpleadoAJAX.php');</script>";
+		else echo "<script>alert('El cliente se ha introducido correctamente.'); document.location=('./indexAdmin.php');</script>";
+	}
  ?>

@@ -6,19 +6,32 @@
 	// funcion que nos elimna los ficheros temporales de fotos y videos.
 	include("eliminar_temporales.php"); 
 
-	//creamos la consulta
-	$consulta = "SELECT * FROM EMBARCACIONES";
+	// $consulta2 = "SELECT Nombre,Apellido1,Apellido2 FROM CLIENTES as C, EMBARCACIONES as E WHERE C.Id_Cliente = E.Id_Cliente";
+	// $resultado2 = $conexion->query($consulta2);
+	// $rows = $resultado2->fetchAll();
+	// foreach ($rows as $fila2)
+	// {
+	// 	$nombre = $fila2['Nombre'];
+	// 	$apellido1 = $fila2['Apellido1'];
+	// 	$apellido2 = $fila2['Apellido2'];
+	// 	$nombreCompleto[] = $nombre.$apellido1.$apellido2;
+	// }
 
+	
+
+	//creamos la consulta
+	$consulta  = "SELECT * FROM EMBARCACIONES";
+	
+	
 	//Creamos la consulta y asignamos el resultado a la variable $resultado
 	$resultado = $conexion->query($consulta);
-
+	
 	// extrae los valores de $resultado
 	$rows = $resultado->fetchAll();
 
 	header("Content-type: text/xml");
 	echo "<?xml version='1.0' encoding='UTF-8' standalone='yes'?>";
     echo "<xml>\n";
-
 	foreach ($rows as $fila)
 	{
 					$matricula = $fila['Matricula'];

@@ -40,6 +40,26 @@
 					echo'<div class="container text-center"> 
 							<form  class="form-horizontal" action="modificar_embarcaciones.php" method="POST" enctype="multipart/form-data">
 
+							  <div class="form-group col-lg-12">
+                                <label class="col-lg-3 control-label" >Nombre Cliente</label>
+                                <div class="col-lg-6">
+                                    <select class="form-control" name="nombreCliente">';
+                                        $consulta = "SELECT Id_Cliente, Nombre, Apellido1,Apellido2 FROM CLIENTES";
+                                        $resultado = $conexion->query($consulta);
+                                        $rows = $resultado->fetchAll();
+
+                                        foreach ($rows as $fila)
+                                        {
+                                            $nombre = $fila['Nombre'];
+                                            $apellido1 = $fila['Apellido1'];
+                                            $apellido2 = $fila['Apellido2'];
+                                            $idcliente = $fila['Id_Cliente'];
+                                            echo '<option value="'.$idcliente.'">'.$nombre.' '.$apellido1.' '.$apellido2.' </option>';
+                                        }
+                              echo '</select>';
+                              echo '</div>
+                              	</div>
+                              	
 								<div class="form-group col-lg-12">
 									<label class="col-lg-3 control-label" >Longitud</label>
 									<div class="col-lg-6">

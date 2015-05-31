@@ -172,6 +172,54 @@
             }
         }
 /*-----------------------FIN AJAX SCRIPT EMBARCACIONES--------------------------*/
+
+/*-----------------------AJAX SCRIPT REPUESTOS----------------------------*/
+        
+        function cargarAjaxRepuestos()
+        {
+            objAjax = AJAXCrearObjeto();
+            mostrarContenidoRepuestos = document.getElementById("page-wrapper2");
+            tablaRepuestos = document.getElementById("tablaRepuestos");
+            tablaRepuestos.innerHTML="";
+            objAjax.open('GET','listarRepuestosXML.php',true)
+            objAjax.onreadystatechange=obtenerRepuestos;
+            objAjax.send('');
+
+            mostrarContenidoRepuestos.style.display = 'block';
+        }
+
+        function obtenerRepuestos()
+        {
+            if(objAjax.readyState == 4 && objAjax.status==200)
+            {
+
+                var xml = objAjax.responseXML.documentElement; //Recuperamos el documento XML
+                // Accedemos al elemento que queremos modifcar con getElementById()
+                tablaRepuestos = document.getElementById("tablaRepuestos");
+                //Recorrido por el árbol del documento (procesamos elementos <ciudad>):
+                for (i = 0; i < xml.getElementsByTagName('repuestos').length; i++)
+                {
+                    //recuperacion de los datos de la consulta siendo <clientes> la etiqueta padre
+                    var filaRepuesto = xml.getElementsByTagName('repuestos')[i]; //XML <clientes>
+                    
+                    var borrar      = filaRepuesto.getElementsByTagName('borrar')[0].firstChild.data;
+                    var modificar   = filaRepuesto.getElementsByTagName('modificar')[0].firstChild.data;
+                    var referencia  = filaRepuesto.getElementsByTagName('referencia')[0].firstChild.data;
+                    var descripcion = filaRepuesto.getElementsByTagName('descripcion')[0].firstChild.data;
+                    var importe     = filaRepuesto.getElementsByTagName('importe')[0].firstChild.data;
+                    var ganancia    = filaRepuesto.getElementsByTagName('ganancia')[0].firstChild.data;
+
+                    // Añadimos las filas y las columnas de la tabla
+                    tablaRepuestos.innerHTML +='<tr><td>'+borrar+'</td>'+
+                                                   '<td>'+modificar+'</td>'+
+                                                   '<td>'+referencia+'</td>'+
+                                                   '<td>'+descripcion+'</td>'+
+                                                   '<td>'+importe+'</td>'+
+                                                   '<td>'+ganancia+'</td></tr>';
+                }
+            }
+        }
+/*-----------------------FIN AJAX SCRIPT REPUESTOS--------------------------*/
     </script> 
 
 
@@ -189,11 +237,13 @@
             var opcionFactura = document.getElementById("opcion4");
             mostrarContenidoClientes = document.getElementById("page-wrapper");
             mostrarContenidoEmbarcaciones = document.getElementById("page-wrapper1");
+            mostrarContenidoRepuestos = document.getElementById("page-wrapper2");
 
             if(opcion == "cliente")
             {
-                mostrarContenidoClientes.style.display = 'block';
                 mostrarContenidoEmbarcaciones.style.display = 'none';
+                mostrarContenidoRepuestos.style.display = 'none';
+                mostrarContenidoClientes.style.display = 'block';
                 opcionMenu.className = "active-menu";
                 opcionBarco.className = "desactive-menu";
                 opcionRepuesto.className = "desactive-menu";
@@ -202,9 +252,9 @@
 
             if(opcion == "barco")
             {
-                mostrarContenidoClientes.style.display = 'none';
                 mostrarContenidoEmbarcaciones.style.display = 'block';
-
+                mostrarContenidoRepuestos.style.display = 'none';
+                mostrarContenidoClientes.style.display = 'none';
                 opcionMenu.className = "desactive-menu";
                 opcionBarco.className = "active-menu";
                 opcionRepuesto.className = "desactive-menu";
@@ -213,6 +263,9 @@
 
             if(opcion == "repuesto")
             {
+                mostrarContenidoEmbarcaciones.style.display = 'none';
+                mostrarContenidoRepuestos.style.display = 'block';
+                mostrarContenidoClientes.style.display = 'none';
                 opcionMenu.className = "desactive-menu";
                 opcionBarco.className = "desactive-menu";
                 opcionRepuesto.className = "active-menu";
@@ -235,8 +288,10 @@
     function refrescar(){
         mostrarContenidoClientes = document.getElementById("page-wrapper");
         mostrarContenidoEmbarcaciones = document.getElementById("page-wrapper1");
+        mostrarContenidoRepuestos = document.getElementById("page-wrapper2");
         mostrarContenidoClientes.style.display = 'none';
         mostrarContenidoEmbarcaciones.style.display = 'none';
+        mostrarContenidoRepuestos.style.display = 'none';
     }
 
     </script>
@@ -282,7 +337,7 @@
                         <a  id="opcion2" href="#embarcaciones"  onClick="activarOpcion('barco'); cargarAjaxEmbarcaciones()"><i class="fa fa-anchor fa-3x"></i>Gestión de Embarcaciones</a>
                     </li>
                     <li>
-                        <a  id="opcion3" href="#" onClick="activarOpcion('repuesto')"><i class="fa fa-wrench fa-3x"></i>Gestión de Repuestos</a>
+                        <a  id="opcion3" href="#repuestos" onClick="activarOpcion('repuesto'); cargarAjaxRepuestos()"><i class="fa fa-wrench fa-3x"></i>Gestión de Repuestos</a>
                     </li>
 					<li>
                         <a  id="opcion4" href="#" onClick="activarOpcion('factura')"><i class="fa fa-clipboard fa-3x"></i>Gestión de Facturas</a>
@@ -328,7 +383,7 @@
                         <?php include("formIntroducir_clientes.php")  ?>
                 </div>
             </div>
-        </div> <!-- COTENIDO PARA MOSTRAR LA TABLA DE CLIENTES -->
+        </div> <!-- FIN COTENIDO PARA MOSTRAR LA TABLA DE CLIENTES -->
 
         
         <!-- COTENIDO PARA MOSTRAR LA TABLA DE EMBARCACIONES -->
@@ -365,7 +420,39 @@
                         <?php include("formIntroducir_embarcaciones.php")  ?>
                 </div>
             </div>
-        </div> <!-- COTENIDO PARA MOSTRAR LA TABLA DE CLIENTES -->
+        </div> <!-- FIN COTENIDO PARA MOSTRAR LA TABLA DE EMBARCACIONES -->
+
+
+        <!-- COTENIDO PARA MOSTRAR LA TABLA DE REPUESTOS -->
+        <div id="page-wrapper2" >
+            <div class="row">
+                <div class="col-md-12" id="repuestos">
+                    <form name="formEliminar" action="eliminar_repuestos.php" method="POST" onSubmit="return validarCheck()">
+                        <table class="table table-bordered text-center">
+                            <h1>Gestion de repuestos</h1>
+                            <thead>
+                                <tr class="success">
+                                    <th>Eliminar</th>
+                                    <th>Modificar</th>
+                                    <th>Referencia</th>
+                                    <th>Descripcion</th>
+                                    <th>Importe</th>
+                                    <th>Ganancia</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaRepuestos">
+                            </tbody>
+                        </table>
+                        <div class="form-group text-center">
+                            <input type="submit" value="Eliminar repuestos seleccionados" class="btn btn-danger">
+                            <input type="reset" value="Deseleccionar Todos" class="btn btn-success">
+                        </div>
+                    </form>
+                    
+                        <?php include("formIntroducir_repuestos.php")  ?>
+                </div>
+            </div>
+        </div> <!-- FIN COTENIDO PARA MOSTRAR LA TABLA DE REPUESTOS -->
     
 
     </div> <!-- FIN CONTENEDOR GLOBAL -->
