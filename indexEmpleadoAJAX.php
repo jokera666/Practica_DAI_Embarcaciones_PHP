@@ -52,14 +52,14 @@
             }
             return obj;
         }
-
+/*-----------------------AJAX SCRIPT CLIENTES--------------------------------*/
         function cargarAjaxClientes()
         {
             objAjax = AJAXCrearObjeto();
             mostrarContenidoClientes = document.getElementById("page-wrapper");
             tablaClientes = document.getElementById("tablaClientes");
             tablaClientes.innerHTML="";
-            objAjax.open('GET','./listarClientesXML.php',true)
+            objAjax.open('GET','listarClientesXML.php',true)
             objAjax.onreadystatechange=obtenerClientes;
             objAjax.send('');
 
@@ -109,11 +109,74 @@
                                                    '<td>'+telefono+'</td>'+
                                                    '<td>'+email+'</td>'+
                                                    '<td>'+foto+'</td></tr>';
-
                 }
             }
         }
-    </script>
+/*-----------------------FIN AJAX SCRIPT CLIENTES-----------------------------*/
+
+
+
+/*-----------------------AJAX SCRIPT EMBARCACIONES----------------------------*/
+        
+        function cargarAjaxEmbarcaciones()
+        {
+            objAjax = AJAXCrearObjeto();
+            mostrarContenidoEmbarcaciones = document.getElementById("page-wrapper1");
+            tablaEmbarcaciones = document.getElementById("tablaEmbarcaciones");
+            tablaEmbarcaciones.innerHTML="";
+            objAjax.open('GET','listarEmbarcacionesXML.php',true)
+            objAjax.onreadystatechange=obtenerEmbarcaciones;
+            objAjax.send('');
+
+            mostrarContenidoEmbarcaciones.style.display = 'block';
+        }
+
+        function obtenerEmbarcaciones()
+        {
+            if(objAjax.readyState == 4 && objAjax.status==200)
+            {
+
+                var xml = objAjax.responseXML.documentElement; //Recuperamos el documento XML
+                // Accedemos al elemento que queremos modifcar con getElementById()
+                tablaEmbarcaciones = document.getElementById('tablaEmbarcaciones');
+                //Recorrido por el árbol del documento (procesamos elementos <ciudad>):
+                for (i = 0; i < xml.getElementsByTagName('embarcaciones').length; i++)
+                {
+                    //recuperacion de los datos de la consulta siendo <clientes> la etiqueta padre
+                    var filaBarco = xml.getElementsByTagName('embarcaciones')[i]; //XML <clientes>
+                    
+                    var borrar    = filaBarco.getElementsByTagName('borrar')[0].firstChild.data;
+                    var modificar = filaBarco.getElementsByTagName('modificar')[0].firstChild.data;
+                    var matricula = filaBarco.getElementsByTagName('matricula')[0].firstChild.data;
+                    var longitud  = filaBarco.getElementsByTagName('longitud')[0].firstChild.data;
+                    var potencia  = filaBarco.getElementsByTagName('potencia')[0].firstChild.data;
+                    var motor     = filaBarco.getElementsByTagName('motor')[0].firstChild.data;
+                    var anyo      = filaBarco.getElementsByTagName('anyo')[0].firstChild.data;
+                    var color     = filaBarco.getElementsByTagName('color')[0].firstChild.data;
+                    var material  = filaBarco.getElementsByTagName('material')[0].firstChild.data;
+                    var idcliente = filaBarco.getElementsByTagName('idcliente')[0].firstChild.data;
+                    var foto        = filaBarco.getElementsByTagName('foto')[0].firstChild.data;
+                    // Añadimos las filas y las columnas de la tabla
+                    tablaEmbarcaciones.innerHTML +='<tr><td>'+borrar+'</td>'+
+                                                   '<td>'+modificar+'</td>'+
+                                                   '<td>'+matricula+'</td>'+
+                                                   '<td>'+longitud+'</td>'+
+                                                   '<td>'+potencia+'</td>'+
+                                                   '<td>'+motor+'</td>'+
+                                                   '<td>'+anyo+'</td>'+
+                                                   '<td>'+color+'</td>'+
+                                                   '<td>'+material+'</td>'+
+                                                   '<td>'+idcliente+'</td>'+
+                                                   '<td>'+foto+'</td></tr>';
+                }
+            }
+        }
+/*-----------------------FIN AJAX SCRIPT EMBARCACIONES--------------------------*/
+    </script> 
+
+
+
+    
 
     <script>
 
@@ -124,9 +187,13 @@
             var opcionBarco = document.getElementById("opcion2");
             var opcionRepuesto = document.getElementById("opcion3");
             var opcionFactura = document.getElementById("opcion4");
+            mostrarContenidoClientes = document.getElementById("page-wrapper");
+            mostrarContenidoEmbarcaciones = document.getElementById("page-wrapper1");
 
             if(opcion == "cliente")
             {
+                mostrarContenidoClientes.style.display = 'block';
+                mostrarContenidoEmbarcaciones.style.display = 'none';
                 opcionMenu.className = "active-menu";
                 opcionBarco.className = "desactive-menu";
                 opcionRepuesto.className = "desactive-menu";
@@ -135,6 +202,8 @@
 
             if(opcion == "barco")
             {
+                mostrarContenidoClientes.style.display = 'none';
+                mostrarContenidoEmbarcaciones.style.display = 'block';
 
                 opcionMenu.className = "desactive-menu";
                 opcionBarco.className = "active-menu";
@@ -162,10 +231,19 @@
 
      </script>
 
+    <script>
+    function refrescar(){
+        mostrarContenidoClientes = document.getElementById("page-wrapper");
+        mostrarContenidoEmbarcaciones = document.getElementById("page-wrapper1");
+        mostrarContenidoClientes.style.display = 'none';
+        mostrarContenidoEmbarcaciones.style.display = 'none';
+    }
+
+    </script>
 
 
 </head>
-<body>
+<body onLoad="refrescar()">
     <div id="wrapper">
         <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
@@ -201,7 +279,7 @@
                         <a  id="opcion1" href="#clientes" onClick="activarOpcion('cliente'); cargarAjaxClientes()"><i class="fa fa-group fa-3x"></i>Gestión de Clientes</a>
                     </li>
                      <li>
-                        <a  id="opcion2" href="#"  onClick="activarOpcion('barco')"><i class="fa fa-anchor fa-3x"></i>Gestión de Embarcaciones</a>
+                        <a  id="opcion2" href="#embarcaciones"  onClick="activarOpcion('barco'); cargarAjaxEmbarcaciones()"><i class="fa fa-anchor fa-3x"></i>Gestión de Embarcaciones</a>
                     </li>
                     <li>
                         <a  id="opcion3" href="#" onClick="activarOpcion('repuesto')"><i class="fa fa-wrench fa-3x"></i>Gestión de Repuestos</a>
@@ -251,15 +329,47 @@
                 </div>
             </div>
         </div> <!-- COTENIDO PARA MOSTRAR LA TABLA DE CLIENTES -->
+
+        
+        <!-- COTENIDO PARA MOSTRAR LA TABLA DE EMBARCACIONES -->
+        <div id="page-wrapper1" >
+            <div class="row">
+                <div class="col-md-12" id="embarcaciones">
+                    <form name="formEliminar" action="eliminar_embarcaciones.php" method="POST" onSubmit="return validarCheck()">
+                        <table class="table table-bordered text-center">
+                            <h1>Gestion de embarcaciones</h1>
+                            <thead>
+                                <tr class="success">
+                                    <th>Eliminar</th>
+                                    <th>Modificar</th>
+                                    <th>Matricula</th>
+                                    <th>Longitud</th>
+                                    <th>Potencia</th>
+                                    <th>Motor</th>
+                                    <th>Año</th>
+                                    <th>Color</th>
+                                    <th>Material</th>
+                                    <th>ID Cliente</th>
+                                    <th>Fotografia</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaEmbarcaciones">
+                            </tbody>
+                        </table>
+                        <div class="form-group text-center">
+                            <input type="submit" value="Eliminar clientes seleccionados" class="btn btn-danger">
+                            <input type="reset" value="Deseleccionar Todos" class="btn btn-success">
+                        </div>
+                    </form>
+                    
+                        <?php include("formIntroducir_embarcaciones.php")  ?>
+                </div>
+            </div>
+        </div> <!-- COTENIDO PARA MOSTRAR LA TABLA DE CLIENTES -->
+    
+
     </div> <!-- FIN CONTENEDOR GLOBAL -->
 
-    <!-- <div id="page-wrapper" >
-                <div class="row">
-                    <div class="col-md-12" id="embarcaciones">
-                            <?php include("listarEmbarcaciones.php") ?>
-                    </div>            
-                </div>
-            </div> -->
 
 
     <script src="js/jquery.js"></script>

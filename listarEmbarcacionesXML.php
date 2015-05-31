@@ -51,7 +51,7 @@
 
 		echo "<embarcaciones>";
 		echo '<borrar><![CDATA[<input type="checkbox" name="checkBorrar[]" value="'.$matricula.'"> <i class="fa fa-trash fa-2x"/>]]></borrar>';
-		echo '<modificar><![CDATA[<a href="formModificar_clientes.php?matricula='.$matricula.'"><i class="fa fa-edit fa-2x"/></a>]]></modificar>';
+		echo '<modificar><![CDATA[<a href="formModificar_embarcaciones.php?matricula='.$matricula.'"><i class="fa fa-edit fa-2x"/></a>]]></modificar>';
 		echo '<matricula>'.$matricula.'</matricula>';
 		echo '<longitud>'.$longitud.'</longitud>';
 		echo '<potencia>'.$potencia.'</potencia>';

@@ -25,3 +25,10 @@ height: 50px;
   min-height: 500px;
   display: none;
 }
+
+#page-wrapper1 {
+  margin: 0 0 0 260px;
+  padding: 15px 30px;
+  min-height: 500px;
+  display: block;
+}
