@@ -47,6 +47,13 @@ height: 50px;
   display: none;
 }
 
+#page-wrapper4 {
+  margin: 0 0 0 260px;
+  padding: 15px 30px;
+  min-height: 500px;
+  display: none;
+}
+
 #login{
   background-color: white;
   opacity: 0.9;

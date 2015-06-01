@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/miEstilos.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/tablaDinamica.js"></script>
 
     <script>
     objAjax = ""; // variable global que se asigna el objeto XMLHTTPRequest
@@ -220,6 +222,67 @@
             }
         }
 /*-----------------------FIN AJAX SCRIPT REPUESTOS--------------------------*/
+
+
+/*-----------------------AJAX SCRIPT FACTURAS----------------------------*/
+        
+        function cargarAjaxFacturas()
+        {
+            objAjax = AJAXCrearObjeto();
+            mostrarContenidoFacturas = document.getElementById("page-wrapper4");
+            tablaFacturas = document.getElementById("tablaFacturas");
+            tablaFacturas.innerHTML="";
+            objAjax.open('GET','listarFacturasXML.php',true)
+            objAjax.onreadystatechange=obtenerFacturas;
+            objAjax.send('');
+
+            mostrarContenidoFacturas.style.display = 'block';
+        }
+
+        function obtenerFacturas()
+        {
+            if(objAjax.readyState == 4 && objAjax.status==200)
+            {
+
+                var xml = objAjax.responseXML.documentElement; //Recuperamos el documento XML
+                // Accedemos al elemento que queremos modifcar con getElementById()
+                tablaFacturas = document.getElementById("tablaFacturas");
+                //Recorrido por el árbol del documento (procesamos elementos <ciudad>):
+                for (i = 0; i < xml.getElementsByTagName('facturas').length; i++)
+                {
+                    //recuperacion de los datos de la consulta siendo <clientes> la etiqueta padre
+                    var filaFactura = xml.getElementsByTagName('facturas')[i]; //XML <clientes>
+                    
+                    var borrar        = filaFactura.getElementsByTagName('borrar')[0].firstChild.data;
+                    var modificar     = filaFactura.getElementsByTagName('modificar')[0].firstChild.data;
+                    var numFactura    = filaFactura.getElementsByTagName('numFactura')[0].firstChild.data;
+                    var matricula     = filaFactura.getElementsByTagName('matricula')[0].firstChild.data;
+                    var manoObra      = filaFactura.getElementsByTagName('manoObra')[0].firstChild.data;
+                    var precioHora    = filaFactura.getElementsByTagName('precioHora')[0].firstChild.data;
+                    var fechaEmision  = filaFactura.getElementsByTagName('fechaEmision')[0].firstChild.data;
+                    var fechaPago     = filaFactura.getElementsByTagName('fechaPago')[0].firstChild.data;
+                    var idempleado    = filaFactura.getElementsByTagName('idempleado')[0].firstChild.data;
+                    var baseImponible = filaFactura.getElementsByTagName('baseImponible')[0].firstChild.data;
+                    var iva           = filaFactura.getElementsByTagName('iva')[0].firstChild.data;
+                    var total         = filaFactura.getElementsByTagName('total')[0].firstChild.data;
+
+                    // Añadimos las filas y las columnas de la tabla
+                    tablaFacturas.innerHTML +='<tr><td>'+borrar+'</td>'+
+                                                   '<td>'+modificar+'</td>'+
+                                                   '<td>'+numFactura+'</td>'+
+                                                   '<td>'+matricula+'</td>'+
+                                                   '<td>'+manoObra+'</td>'+
+                                                   '<td>'+precioHora+'</td>'+
+                                                   '<td>'+fechaEmision+'</td>'+
+                                                   '<td>'+fechaPago+'</td>'+
+                                                   '<td>'+idempleado+'</td>'+
+                                                   '<td>'+baseImponible+'</td>'+
+                                                   '<td>'+iva+'</td>'+
+                                                   '<td>'+total+'</td></tr>';
+                }
+            }
+        }
+/*-----------------------FIN AJAX SCRIPT FACTURAS--------------------------*/
     </script> 
 
 
@@ -231,20 +294,23 @@
         //Funcion que deja activa la opcion seleccionada en el nav
         function activarOpcion(opcion)
         {
-            var opcionMenu = document.getElementById("opcion1");
+            var opcionCliente = document.getElementById("opcion1");
             var opcionBarco = document.getElementById("opcion2");
             var opcionRepuesto = document.getElementById("opcion3");
             var opcionFactura = document.getElementById("opcion4");
             mostrarContenidoClientes = document.getElementById("page-wrapper");
             mostrarContenidoEmbarcaciones = document.getElementById("page-wrapper1");
             mostrarContenidoRepuestos = document.getElementById("page-wrapper2");
+            mostrarContenidoFacturas = document.getElementById("page-wrapper4");
 
             if(opcion == "cliente")
             {
+                mostrarContenidoClientes.style.display = 'block';
                 mostrarContenidoEmbarcaciones.style.display = 'none';
                 mostrarContenidoRepuestos.style.display = 'none';
-                mostrarContenidoClientes.style.display = 'block';
-                opcionMenu.className = "active-menu";
+                mostrarContenidoFacturas.style.display = 'none';
+                
+                opcionCliente.className = "active-menu";
                 opcionBarco.className = "desactive-menu";
                 opcionRepuesto.className = "desactive-menu";
                 opcionFactura.className = "desactive-menu";
@@ -252,10 +318,12 @@
 
             if(opcion == "barco")
             {
+                mostrarContenidoClientes.style.display = 'none';
                 mostrarContenidoEmbarcaciones.style.display = 'block';
                 mostrarContenidoRepuestos.style.display = 'none';
-                mostrarContenidoClientes.style.display = 'none';
-                opcionMenu.className = "desactive-menu";
+                mostrarContenidoFacturas.style.display = 'none';
+                
+                opcionCliente.className = "desactive-menu";
                 opcionBarco.className = "active-menu";
                 opcionRepuesto.className = "desactive-menu";
                 opcionFactura.className = "desactive-menu";
@@ -263,10 +331,12 @@
 
             if(opcion == "repuesto")
             {
+                mostrarContenidoClientes.style.display = 'none';
                 mostrarContenidoEmbarcaciones.style.display = 'none';
                 mostrarContenidoRepuestos.style.display = 'block';
-                mostrarContenidoClientes.style.display = 'none';
-                opcionMenu.className = "desactive-menu";
+                mostrarContenidoFacturas.style.display = 'none';
+                
+                opcionCliente.className = "desactive-menu";
                 opcionBarco.className = "desactive-menu";
                 opcionRepuesto.className = "active-menu";
                 opcionFactura.className = "desactive-menu";
@@ -274,7 +344,11 @@
 
             if(opcion == "factura")
             {
-                opcionMenu.className = "desactive-menu";
+                mostrarContenidoClientes.style.display = 'none';
+                mostrarContenidoEmbarcaciones.style.display = 'none';
+                mostrarContenidoRepuestos.style.display = 'none';
+                mostrarContenidoFacturas.style.display = 'block';
+                opcionCliente.className = "desactive-menu";
                 opcionBarco.className = "desactive-menu";
                 opcionRepuesto.className = "desactive-menu";
                 opcionFactura.className = "active-menu";
@@ -340,7 +414,7 @@
                         <a  id="opcion3" href="#repuestos" onClick="activarOpcion('repuesto'); cargarAjaxRepuestos()"><i class="fa fa-wrench fa-3x"></i>Gestión de Repuestos</a>
                     </li>
 					<li>
-                        <a  id="opcion4" href="#" onClick="activarOpcion('factura')"><i class="fa fa-clipboard fa-3x"></i>Gestión de Facturas</a>
+                        <a  id="opcion4" href="#facturas" onClick="activarOpcion('factura'); cargarAjaxFacturas()"><i class="fa fa-clipboard fa-3x"></i>Gestión de Facturas</a>
                     </li>	
                 </ul>               
             </div>
@@ -453,13 +527,51 @@
                 </div>
             </div>
         </div> <!-- FIN COTENIDO PARA MOSTRAR LA TABLA DE REPUESTOS -->
+
+
+        <!-- COTENIDO PARA MOSTRAR LA TABLA DE FACTURAS -->
+        <div id="page-wrapper4" >
+            <div class="row">
+                <div class="col-md-12" id="facturas">
+                    <form name="formEliminar" action="eliminar_facturas.php" method="POST" onSubmit="return validarCheck()">
+                        <table class="table table-bordered text-center">
+                            <h1>Gestion de facturas</h1>
+                            <thead>
+                                <tr class="success">
+                                    <th>Eliminar</th>
+                                    <th>Modificar</th>
+                                    <th>Numero Factura</th>
+                                    <th>Matricula</th>
+                                    <th>Mano de obra</th>
+                                    <th>Precio hora</th>
+                                    <th>Fecha Emision</th>
+                                    <th>Fecha Pago</th>
+                                    <th>ID Empleado</th>
+                                    <th>Base imponible</th>
+                                    <th>IVA</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaFacturas">
+                            </tbody>
+                        </table>
+                        <div class="form-group text-center">
+                            <input type="submit" value="Eliminar facturas seleccionadas" class="btn btn-danger">
+                            <input type="reset" value="Deseleccionar Todos" class="btn btn-success">
+                        </div>
+                    </form>
+                    
+                        <?php include("formIntroducir_facturas.php")  ?>
+                </div>
+            </div>
+        </div> <!-- FIN COTENIDO PARA MOSTRAR LA TABLA DE REPUESTOS -->
     
 
     </div> <!-- FIN CONTENEDOR GLOBAL -->
 
 
+    
 
-    <script src="js/jquery.js"></script>
     <script src="js/bootstrap.js"></script>
 </body>
 </html>

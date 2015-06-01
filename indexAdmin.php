@@ -404,7 +404,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="indexEmpleadoAJAX.php"><?php echo $usuario; ?></a> 
+                <a class="navbar-brand" href="indexAdmin.php"><?php echo $usuario; ?></a> 
             </div>
 
             <div class="col-md-5">
