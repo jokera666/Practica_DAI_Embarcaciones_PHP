@@ -69,7 +69,7 @@
 	if(!$resultado)
 	{
 		if($tipo=="Empleado") echo "<script>alert('Error al introducir el cliente.'); document.location=('./indexEmpleadoAJAX.php');</script>";
-		else echo "<script>alert('Error al introducir el cliente.'); document.location=('./indexEmpleadoAJAX.php');</script>";
+		else echo "<script>alert('Error al introducir el cliente.'); document.location=('./indexAdmin.php');</script>";
 	}
 		
 	else

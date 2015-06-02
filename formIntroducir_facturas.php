@@ -3,6 +3,22 @@
     //include("seguridad.php");
 
 echo'
+
+
+    <script>
+
+    function calcularTotal()
+    {
+        var obra = document.getElementById("manoObra").value;
+        var precioH = document.getElementById("precioHora").value;
+        var total = document.getElementById("total");
+        total.value = parseFloat(obra)+parseFloat(precioH);
+    }
+
+    </script>
+
+
+
     <script src="js/jquery.js"></script>
     <script src="js/tablaDinamica.js"></script>
     <div class="text-center">
@@ -18,7 +34,7 @@ echo'
                             <br>
                             <form  class="form-horizontal" action="introducir_facturas.php" method="POST">
                                 
-                                3<div class="form-group col-lg-12">
+                                <div class="form-group col-lg-12">
                                     <label class="col-lg-3 control-label" >Numero de Factura</label>
                                     <div class="col-lg-6">
                                         <input class="form-control" type="text" name="numFactura">
@@ -82,14 +98,14 @@ echo'
                                 <div class="form-group col-lg-12">
                                     <label class="col-lg-3 control-label" >Mano de obra</label>
                                     <div class="col-lg-6">
-                                        <input class="form-control" type="text" name="manoObra">
+                                        <input class="form-control" type="number" id="manoObra" onKeyUp="calcularTotal()" name="manoObra">
                                     </div>
                                 </div>
 
                                 <div class="form-group col-lg-12">
-                                    <label class="col-lg-3 control-label" >Precio hora</label>
+                                    <label class="col-lg-3 control-label">Precio hora</label>
                                     <div class="col-lg-6">
-                                        <input class="form-control" type="text" name="precioHora">
+                                        <input class="form-control" type="number" id="precioHora" onKeyUp="calcularTotal()" name="precioHora">
                                     </div>
                                 </div>
 
@@ -144,7 +160,7 @@ echo'
                                 <div class="form-group col-lg-12">
                                     <label class="col-lg-3 control-label" >Total</label>
                                     <div class="col-lg-6">
-                                        <input class="form-control" type="text" name="total">
+                                        <input class="form-control" type="number" id="total" name="total" disabled>
                                     </div>
                                 </div>
 

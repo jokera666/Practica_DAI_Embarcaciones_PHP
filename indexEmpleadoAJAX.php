@@ -25,8 +25,6 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/miEstilos.css">
-    <script src="js/jquery.js"></script>
-    <script src="js/tablaDinamica.js"></script>
 
     <script>
     objAjax = ""; // variable global que se asigna el objeto XMLHTTPRequest
@@ -255,6 +253,7 @@
                     
                     var borrar        = filaFactura.getElementsByTagName('borrar')[0].firstChild.data;
                     var modificar     = filaFactura.getElementsByTagName('modificar')[0].firstChild.data;
+                    var imprimir     = filaFactura.getElementsByTagName('imprimir')[0].firstChild.data;
                     var numFactura    = filaFactura.getElementsByTagName('numFactura')[0].firstChild.data;
                     var matricula     = filaFactura.getElementsByTagName('matricula')[0].firstChild.data;
                     var manoObra      = filaFactura.getElementsByTagName('manoObra')[0].firstChild.data;
@@ -269,6 +268,7 @@
                     // Añadimos las filas y las columnas de la tabla
                     tablaFacturas.innerHTML +='<tr><td>'+borrar+'</td>'+
                                                    '<td>'+modificar+'</td>'+
+                                                   '<td>'+imprimir+'</td>'+
                                                    '<td>'+numFactura+'</td>'+
                                                    '<td>'+matricula+'</td>'+
                                                    '<td>'+manoObra+'</td>'+
@@ -540,6 +540,7 @@
                                 <tr class="success">
                                     <th>Eliminar</th>
                                     <th>Modificar</th>
+                                    <th>Imprimir</th>
                                     <th>Numero Factura</th>
                                     <th>Matricula</th>
                                     <th>Mano de obra</th>
@@ -571,7 +572,7 @@
 
 
     
-
+    <script src="js/jquery.js"></script>
     <script src="js/bootstrap.js"></script>
 </body>
 </html>

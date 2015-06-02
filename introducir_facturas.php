@@ -2,6 +2,7 @@
 
 	include("conexionPDO.php");
 	include("seguridad.php");
+	$tipo = $_SESSION["identificaion"];
 
 	$numFactura = $_POST['numFactura'];
 	$matricula = $_POST["matriculaEmbarcacion"];
@@ -9,18 +10,40 @@
 	$precioHora = $_POST["precioHora"];
 	$fechaEmision = $_POST["fechaEmision"];
 	$fechaPago = $_POST["fechaPago"];
-	$nombreCliente = $_POST["nombreCliente"];
+	$idCliente = $_POST["nombreCliente"];
 	$baseImponible = $_POST["baseImponible"];
 	$iva = $_POST["iva"];
 	$total = $_POST["total"];
 
+	$setenciaControl = "SELECT COUNT(*) as numeroFacturas FROM FACTURA WHERE Numero_Factura = '".$numFactura."' ";
+	$resultadoControl = $conexion->query($setenciaControl);
+	$rows = $resultadoControl->fetchAll();
+
+	foreach ($rows as $fila)
+	{
+		$aux = $fila['numeroFacturas'];
+	}
+	if($aux!=0)
+	{
+		if($tipo=="Empleado") echo "<script>alert('Error: La factura ya existe.'); document.location=('./indexEmpleadoAJAX.php');</script>";
+		else echo "<script>alert('Error: La factura ya existe.'); document.location=('./indexAdmin.php');</script>";
+		break;
+
+	}
 
 
 
-
-
-	
-
+	$sentenciaSQL = "INSERT INTO FACTURA(Numero_Factura,Matricula,Mano_de_Obra,Precio_Hora,Fecha_Emision,Fecha_Pago,Id_Empleado,Base_Imponible,IVA,Total) 
+					 VALUES ('".$numFactura."', 
+					 		 '".$matricula."', 
+					 		 '".$manoObra."', 
+					 		 '".$precioHora."',
+					 		 '".$fechaEmision."',
+					 		 '".$fechaPago."',
+					 		 '".$idCliente."',
+					 		 '".$baseImponible."',
+					 		 '".$iva."',
+					 		 '".$total."' )";
 
 	$patron_ref = '/^referencias/';
 	$myArray_ref = array();
@@ -46,45 +69,23 @@
 	for($i=0; $i<count($arrayReferencias); $i++)
 	{
 
+		$sentencia2SQL = "INSERT INTO DETALLE_FACTURA(Numero_Factura,Referencia,Unidades) VALUES ('".$numFactura."',".$arrayReferencias[$i].",".$arrayUnidades[$i].")";
+		$resultadoDetalle = $conexion->query($sentencia2SQL);
 		//echo $arrayReferencias[$i].' ';
 		//echo $arrayUnidades[$i].' ';
 	}
 
-	//INSERTAR FACTURA y LUEGO EN LOS FOR INSERTAR EL NUMERO DE FACTURA CON LAS REFERENCIAS
-
-
-
-
-	//lineas necesarias para ver que usuario esta en sesion
-	// y redigirlo en su pagina de menu
-	//session_start();
-	// $tipo = $_SESSION["identificaion"];
-
-
-
-	// $sentenciaSQL = "INSERT INTO FACTURA(DNI,Nombre,Apellido1,Apellido2,Direccion,CP,Poblacion,Provincia,Telefono,Email,Fotografia) 
-	// 				 VALUES ('".$inDni."', 
-	// 				 		 '".$inNombre."', 
-	// 				 		 '".$inApellido1."', 
-	// 				 		 '".$inApellido2."',
-	// 				 		 '".$inDireccion."',
-	// 				 		 '".$inCP."',
-	// 				 		 '".$inPoblacion."',
-	// 				 		 '".$inProvincia."',
-	// 				 		 '".$inTelefono."',
-	// 				 		 '".$inEmail."',
-	// 				 		 '".$jpg."' )";
-
-	// $resultado = $conexion->query($sentenciaSQL);
-	// if(!$resultado)
-	// {
-	// 	if($tipo=="Empleado") echo "<script>alert('Error al introducir el cliente.'); document.location=('./indexEmpleadoAJAX.php');</script>";
-	// 	else echo "<script>alert('Error al introducir el cliente.'); document.location=('./indexEmpleadoAJAX.php');</script>";
-	// }
+	$resultado = $conexion->query($sentenciaSQL);
+	if(!$resultado)
+	{
+		if($tipo=="Empleado") echo "<script>alert('Error al introducir la factura.'); document.location=('./indexEmpleadoAJAX.php');</script>";
+		else echo "<script>alert('Error al introducir la factura.'); document.location=('./indexAdmin.php');</script>";
+	}
 		
-	// else
-	// {
-	// 	if($tipo=="Empleado") echo "<script>alert('El cliente se ha introducido correctamente.'); document.location=('./indexEmpleadoAJAX.php');</script>";
-	// 	else echo "<script>alert('El cliente se ha introducido correctamente.'); document.location=('./indexAdmin.php');</script>";
-	// }
+	else
+	{
+		if($tipo=="Empleado") echo "<script>alert('La factura se ha introducido correctamente.'); document.location=('./indexEmpleadoAJAX.php');</script>";
+		else echo "<script>alert('La factura se ha introducido correctamente.'); document.location=('./indexAdmin.php');</script>";
+	}
+
  ?>

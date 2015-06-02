@@ -1,7 +1,7 @@
 <?php 
 
 	include("conexionPDO.php");
-	$consulta = "SELECT Referencia,Descripcion FROM REPUESTOS";
+	$consulta = "SELECT Referencia,Descripcion,Importe,Ganancia FROM REPUESTOS";
 
     $resultado = $conexion->query($consulta);
     $rows = $resultado->fetchAll();
@@ -10,6 +10,11 @@
     {
         $referencia = $fila['Referencia'];
         $descripcion = $fila['Descripcion'];
+        $importe = $fila['Importe'];
+        $ganancia = $fila['Ganancia'];
         echo '<option value="'.$referencia.'"> '.$descripcion.' </option>';
+        echo '<option value="'.$referencia.'" hidden> '.$importe.' </option>';
+        echo '<option value="'.$referencia.'" hidden> '.$ganancia.' </option>';
+
     }
  ?>

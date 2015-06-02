@@ -34,6 +34,7 @@
 		echo "<facturas>";
 		echo '<borrar><![CDATA[<input type="checkbox" name="checkBorrar[]" value="'.$numFactura.'"> <i class="fa fa-trash fa-2x"/>]]></borrar>';
 		echo '<modificar><![CDATA[<a href="formModificar_facturas.php?numFactura='.$numFactura.'"><i class="fa fa-edit fa-2x"/></a>]]></modificar>';
+		echo '<imprimir><![CDATA[<a href="generadorPDF.php?numFactura='.$numFactura.'"><i class="fa fa-print fa-2x"/></a>]]></imprimir>';
 		echo '<numFactura>'.$numFactura.'</numFactura>';		
 		echo '<matricula>'.$matricula.'</matricula>';
 		echo '<manoObra>'.$manoObra.'</manoObra>';
