@@ -11,8 +11,7 @@
 	$inAnyo = $_POST["anyo"];
 	$inColor = $_POST["color"];
 	$inMaterial = $_POST["material"];
-	$inIdcliente = $_POST["idcliente"];
-
+	$inIdcliente = $_POST["nombreCliente"];
 
 
 	//Tratamiento necesario para introducir la imagen en la base de datos

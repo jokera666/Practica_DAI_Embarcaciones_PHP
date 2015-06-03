@@ -4,24 +4,28 @@
 	//include("seguridad.php");
 
 	// funcion que nos elimna los ficheros temporales de fotos y videos.
-	include("eliminar_temporales.php"); 
+	include("eliminar_temporales.php");
+	include("eliminar_temporales_perfil.php"); 
 
-	// $consulta2 = "SELECT Nombre,Apellido1,Apellido2 FROM CLIENTES as C, EMBARCACIONES as E WHERE C.Id_Cliente = E.Id_Cliente";
-	// $resultado2 = $conexion->query($consulta2);
-	// $rows = $resultado2->fetchAll();
-	// foreach ($rows as $fila2)
-	// {
-	// 	$nombre = $fila2['Nombre'];
-	// 	$apellido1 = $fila2['Apellido1'];
-	// 	$apellido2 = $fila2['Apellido2'];
-	// 	$nombreCompleto[] = $nombre.$apellido1.$apellido2;
-	// }
+
 
 	
 
 	//creamos la consulta
-	$consulta  = "SELECT * FROM EMBARCACIONES";
-	
+	$consulta  = "SELECT E.Matricula,
+						 E.Longitud, 
+						 E.Potencia, 
+						 E.Motor, 
+						 E.Anyo, 
+						 E.Color, 
+						 E.Material, 
+						 C.Nombre, 
+						 C.Apellido1, 
+						 C.Apellido2, 
+						 E.Fotografia 
+				FROM EMBARCACIONES  E, CLIENTES C 
+				WHERE C.Id_Cliente = E.Id_Cliente";
+
 	
 	//Creamos la consulta y asignamos el resultado a la variable $resultado
 	$resultado = $conexion->query($consulta);
@@ -41,9 +45,12 @@
 					$anyo = $fila['Anyo'];
 					$color = $fila['Color'];
 					$material = $fila['Material'];
-					$id_cliente = $fila['Id_Cliente'];
+					$nombre = $fila['Nombre'];
+					$apellido1 = $fila['Apellido1'];
+					$apellido2 = $fila['Apellido2'];
 					$foto = $fila['Fotografia']; // las fotos en la base de datos son ficheros binarios y no se pueden mostrar directamente
 
+					$nombreCompleto = $nombre.' '.$apellido1.' '.$apellido2;
 		//Tratamiento de la imagen antes de mostrarla
 		//getcwd: devuelve el directorio actual
 		//tempnam: crea un archivo temporal
@@ -72,7 +79,7 @@
 		echo '<anyo>'.$anyo.'</anyo>';
 		echo '<color>'.$color.'</color>';
 		echo '<material>'.$material.'</material>';
-		echo '<idcliente>'.$id_cliente.'</idcliente>';
+		echo '<nombreCompleto>'.$nombreCompleto.'</nombreCompleto>';
 		echo '<foto><![CDATA[<center><a href="temporales/'.$imagen.'"><img src="temporales/'.$imagen.'" width=50 border=0></a></center>]]></foto>';
 		echo "</embarcaciones>";
 	}

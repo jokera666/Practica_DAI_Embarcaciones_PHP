@@ -15,6 +15,15 @@ echo'
         total.value = parseFloat(obra)+parseFloat(precioH);
     }
 
+    function calcularManoObra()
+    {
+        var numeroH = document.getElementById("numHoras").value;
+        var precioH = document.getElementById("precioHora").value;
+        var manoObra = document.getElementById("manoObra");
+        manoObra.value = parseFloat(numeroH)*parseFloat(precioH);
+
+    }
+
     </script>
 
 
@@ -37,7 +46,7 @@ echo'
                                 <div class="form-group col-lg-12">
                                     <label class="col-lg-3 control-label" >Numero de Factura</label>
                                     <div class="col-lg-6">
-                                        <input class="form-control" type="text" name="numFactura">
+                                        <input class="form-control" type="text" maxlength="9" name="numFactura">
                                     </div>
                                 </div>
 
@@ -95,17 +104,26 @@ echo'
                                 </div>
 
 
-                                <div class="form-group col-lg-12">
-                                    <label class="col-lg-3 control-label" >Mano de obra</label>
-                                    <div class="col-lg-6">
-                                        <input class="form-control" type="number" id="manoObra" onKeyUp="calcularTotal()" name="manoObra">
-                                    </div>
-                                </div>
+
 
                                 <div class="form-group col-lg-12">
                                     <label class="col-lg-3 control-label">Precio hora</label>
                                     <div class="col-lg-6">
-                                        <input class="form-control" type="number" id="precioHora" onKeyUp="calcularTotal()" name="precioHora">
+                                        <input class="form-control" type="number" step="0.01" id="precioHora" onKeyUp="calcularManoObra()" name="precioHora">
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-lg-12">
+                                    <label class="col-lg-3 control-label">Numero de Horas</label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" type="number" id="numHoras" onKeyUp="calcularManoObra()" name="numHoras">
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-lg-12">
+                                    <label class="col-lg-3 control-label" >Mano de obra</label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" type="number" step="0.01" id="manoObra" onKeyUp="calcularManoObra()" name="manoObra">
                                     </div>
                                 </div>
 
@@ -124,10 +142,17 @@ echo'
                                 </div>
 
                                 <div class="form-group col-lg-12">
-                                    <label class="col-lg-3 control-label" >Nombre Cliente</label>
+                                    <label class="col-lg-3 control-label" >IVA</label>
                                     <div class="col-lg-6">
-                                        <select class="form-control" name="nombreCliente">';
-                                            $consulta = "SELECT Id_Cliente, Nombre, Apellido1,Apellido2 FROM CLIENTES";
+                                        <input class="form-control" type="number" name="iva">
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-lg-12">
+                                    <label class="col-lg-3 control-label" >Nombre Empleado</label>
+                                    <div class="col-lg-6">
+                                        <select class="form-control" name="nombreEmpleado">';
+                                            $consulta = "SELECT Id_Empleado, Nombre, Apellido1,Apellido2 FROM EMPLEADOS";
                                             $resultado = $conexion->query($consulta);
                                             $rows = $resultado->fetchAll();
 
@@ -136,32 +161,11 @@ echo'
                                                 $nombre = $fila['Nombre'];
                                                 $apellido1 = $fila['Apellido1'];
                                                 $apellido2 = $fila['Apellido2'];
-                                                $idcliente = $fila['Id_Cliente'];
-                                                echo '<option value="'.$idcliente.'">'.$nombre.' '.$apellido1.' '.$apellido2.' </option>';
+                                                $idEmpleado = $fila['Id_Empleado'];
+                                                echo '<option value="'.$idEmpleado.'">'.$nombre.' '.$apellido1.' '.$apellido2.' </option>';
                                             }
                                   echo '</select>';
                               echo'</div>
-                                </div>
-
-                                <div class="form-group col-lg-12">
-                                    <label class="col-lg-3 control-label" >Base imponible</label>
-                                    <div class="col-lg-6">
-                                        <input class="form-control" type="text" name="baseImponible">
-                                    </div>
-                                </div>
-
-                                <div class="form-group col-lg-12">
-                                    <label class="col-lg-3 control-label" >IVA</label>
-                                    <div class="col-lg-6">
-                                        <input class="form-control" type="text" name="iva">
-                                    </div>
-                                </div>
-
-                                <div class="form-group col-lg-12">
-                                    <label class="col-lg-3 control-label" >Total</label>
-                                    <div class="col-lg-6">
-                                        <input class="form-control" type="number" id="total" name="total" disabled>
-                                    </div>
                                 </div>
 
                                 <div class="form-group text-center">

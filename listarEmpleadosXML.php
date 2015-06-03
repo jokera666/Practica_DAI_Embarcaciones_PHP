@@ -6,7 +6,8 @@
 	include("seguridad.php");
 
 	// funcion que nos elimna los ficheros temporales de fotos y videos.
-	include("eliminar_temporales.php"); 
+	include("eliminar_temporales.php");
+	include("eliminar_temporales_perfil.php"); 
 
 	//creamos la consulta
 	$consulta = "SELECT * FROM EMPLEADOS";

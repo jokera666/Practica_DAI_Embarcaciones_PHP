@@ -1,5 +1,18 @@
 <?php  
 echo'
+
+    <script>
+
+    function calcularGanancia()
+    {
+        var importe = document.getElementById("importe").value;
+
+        var gananciaCalculada = document.getElementById("ganancia");
+        gananciaCalculada.value = parseFloat(importe)*0.30;
+    }
+
+    </script>
+
     <div class="text-center">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal">Introducir repuesto nuevo</button>
             <div class="modal fade bs-example-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -15,7 +28,7 @@ echo'
                                 <div class="form-group col-lg-12">
                                     <label class="col-lg-3 control-label" >Referencia</label>
                                     <div class="col-lg-6">
-                                        <input class="form-control" type="text" name="referencia">
+                                        <input class="form-control" type="text" maxlength="6" name="referencia">
                                     </div>
                                 </div>
 
@@ -29,14 +42,14 @@ echo'
                                 <div class="form-group col-lg-12">
                                     <label class="col-lg-3 control-label" >Importe</label>
                                     <div class="col-lg-6">
-                                        <input class="form-control" type="text" name="importe">
+                                        <input class="form-control" type="number" step="0.01" id="importe" name="importe" onKeyUp="calcularGanancia()">
                                     </div>
                                 </div>
 
                                 <div class="form-group col-lg-12">
                                     <label class="col-lg-3 control-label" >Ganancia</label>
                                     <div class="col-lg-6">
-                                        <input class="form-control" type="text" name="ganancia">
+                                        <input class="form-control" type="number" step="0.01" id="ganancia" name="ganancia">
                                     </div>
                                 </div>
 

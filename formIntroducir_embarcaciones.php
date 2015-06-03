@@ -19,7 +19,7 @@ echo'
                                 <div class="form-group col-lg-12">
                                     <label class="col-lg-3 control-label" >Matricula</label>
                                     <div class="col-lg-6">
-                                        <input class="form-control" type="text" name="matricula">
+                                        <input class="form-control" type="text" maxlength="14" name="matricula">
                                     </div>
                                 </div>
 
@@ -46,14 +46,14 @@ echo'
                                 <div class="form-group col-lg-12">
                                     <label class="col-lg-3 control-label" >Longitud</label>
                                     <div class="col-lg-6">
-                                        <input class="form-control" type="text" name="longitud">
+                                        <input class="form-control" type="number" name="longitud">
                                     </div>
                                 </div>
 
                                 <div class="form-group col-lg-12">
                                     <label class="col-lg-3 control-label" >Potencia</label>
                                     <div class="col-lg-6">
-                                        <input class="form-control" type="text" name="potencia">
+                                        <input class="form-control" type="number" name="potencia">
                                     </div>
                                 </div>
 
@@ -67,7 +67,7 @@ echo'
                                 <div class="form-group col-lg-12">
                                     <label class="col-lg-3 control-label" >Año</label>
                                     <div class="col-lg-6">
-                                        <input class="form-control" type="text" name="anyo">
+                                        <input class="form-control" type="number" maxlength="4" name="anyo">
                                     </div>
                                 </div>
 

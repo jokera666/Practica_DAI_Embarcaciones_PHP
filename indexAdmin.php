@@ -154,7 +154,7 @@
                     var anyo      = filaBarco.getElementsByTagName('anyo')[0].firstChild.data;
                     var color     = filaBarco.getElementsByTagName('color')[0].firstChild.data;
                     var material  = filaBarco.getElementsByTagName('material')[0].firstChild.data;
-                    var idcliente = filaBarco.getElementsByTagName('idcliente')[0].firstChild.data;
+                    var nombreCompleto = filaBarco.getElementsByTagName('nombreCompleto')[0].firstChild.data;
                     var foto        = filaBarco.getElementsByTagName('foto')[0].firstChild.data;
                     // Añadimos las filas y las columnas de la tabla
                     tablaEmbarcaciones.innerHTML +='<tr><td>'+borrar+'</td>'+
@@ -166,7 +166,7 @@
                                                    '<td>'+anyo+'</td>'+
                                                    '<td>'+color+'</td>'+
                                                    '<td>'+material+'</td>'+
-                                                   '<td>'+idcliente+'</td>'+
+                                                   '<td>'+nombreCompleto+'</td>'+
                                                    '<td>'+foto+'</td></tr>';
                 }
             }
@@ -288,6 +288,71 @@
             }
         }
 /*-----------------------FIN AJAX SCRIPT EMPLEADOS-----------------------------*/
+
+
+/*-----------------------AJAX SCRIPT FACTURAS----------------------------*/
+        
+        function cargarAjaxFacturas()
+        {
+            objAjax = AJAXCrearObjeto();
+            mostrarContenidoFacturas = document.getElementById("page-wrapper4");
+            tablaFacturas = document.getElementById("tablaFacturas");
+            tablaFacturas.innerHTML="";
+            objAjax.open('GET','listarFacturasXML.php',true)
+            objAjax.onreadystatechange=obtenerFacturas;
+            objAjax.send('');
+
+            mostrarContenidoFacturas.style.display = 'block';
+        }
+
+        function obtenerFacturas()
+        {
+            if(objAjax.readyState == 4 && objAjax.status==200)
+            {
+
+                var xml = objAjax.responseXML.documentElement; //Recuperamos el documento XML
+                // Accedemos al elemento que queremos modifcar con getElementById()
+                tablaFacturas = document.getElementById("tablaFacturas");
+                //Recorrido por el árbol del documento (procesamos elementos <ciudad>):
+                for (i = 0; i < xml.getElementsByTagName('facturas').length; i++)
+                {
+                    //recuperacion de los datos de la consulta siendo <clientes> la etiqueta padre
+                    var filaFactura = xml.getElementsByTagName('facturas')[i]; //XML <clientes>
+                    
+                    var borrar        = filaFactura.getElementsByTagName('borrar')[0].firstChild.data;
+                    var modificar     = filaFactura.getElementsByTagName('modificar')[0].firstChild.data;
+                    var imprimir      = filaFactura.getElementsByTagName('imprimir')[0].firstChild.data;
+                    var numFactura    = filaFactura.getElementsByTagName('numFactura')[0].firstChild.data;
+                    var matricula     = filaFactura.getElementsByTagName('matricula')[0].firstChild.data;
+                    var manoObra      = filaFactura.getElementsByTagName('manoObra')[0].firstChild.data;
+                    var precioHora    = filaFactura.getElementsByTagName('precioHora')[0].firstChild.data;
+                    var numHoras      = filaFactura.getElementsByTagName('numHoras')[0].firstChild.data;
+                    var fechaEmision  = filaFactura.getElementsByTagName('fechaEmision')[0].firstChild.data;
+                    var fechaPago     = filaFactura.getElementsByTagName('fechaPago')[0].firstChild.data;
+                    var nombreCompleto    = filaFactura.getElementsByTagName('nombreCompleto')[0].firstChild.data;
+                    var baseImponible = filaFactura.getElementsByTagName('baseImponible')[0].firstChild.data;
+                    var iva           = filaFactura.getElementsByTagName('iva')[0].firstChild.data;
+                    var total         = filaFactura.getElementsByTagName('total')[0].firstChild.data;
+
+                    // Añadimos las filas y las columnas de la tabla
+                    tablaFacturas.innerHTML +='<tr><td>'+borrar+'</td>'+
+                                                   '<td>'+modificar+'</td>'+
+                                                   '<td>'+imprimir+'</td>'+
+                                                   '<td>'+numFactura+'</td>'+
+                                                   '<td>'+matricula+'</td>'+
+                                                   '<td>'+manoObra+'</td>'+
+                                                   '<td>'+precioHora+'</td>'+
+                                                   '<td>'+numHoras+'</td>'+
+                                                   '<td>'+fechaEmision+'</td>'+
+                                                   '<td>'+fechaPago+'</td>'+
+                                                   '<td>'+nombreCompleto+'</td>'+
+                                                   '<td>'+baseImponible+'</td>'+
+                                                   '<td>'+iva+'</td>'+
+                                                   '<td>'+total+'</td></tr>';
+                }
+            }
+        }
+/*-----------------------FIN AJAX SCRIPT FACTURAS--------------------------*/
     </script> 
 
 
@@ -299,7 +364,7 @@
         //Funcion que deja activa la opcion seleccionada en el nav
         function activarOpcion(opcion)
         {
-            var opcionMenu = document.getElementById("opcion1");
+            var opcionCliente = document.getElementById("opcion1");
             var opcionBarco = document.getElementById("opcion2");
             var opcionRepuesto = document.getElementById("opcion3");
             var opcionEmpleado = document.getElementById("opcion4");
@@ -309,6 +374,7 @@
             mostrarContenidoEmbarcaciones = document.getElementById("page-wrapper1");
             mostrarContenidoRepuestos = document.getElementById("page-wrapper2");
             mostrarContenidoEmpleados = document.getElementById("page-wrapper3");
+            mostrarContenidoFacturas = document.getElementById("page-wrapper4");
 
             if(opcion == "cliente")
             {
@@ -316,8 +382,9 @@
                 mostrarContenidoEmbarcaciones.style.display = 'none';
                 mostrarContenidoRepuestos.style.display = 'none';
                 mostrarContenidoEmpleados.style.display = 'none';
+                mostrarContenidoFacturas.style.display = 'none';
 
-                opcionMenu.className = "active-menu";
+                opcionCliente.className = "active-menu";
                 opcionBarco.className = "desactive-menu";
                 opcionRepuesto.className = "desactive-menu";
                 opcionEmpleado.className = "desactive-menu";
@@ -330,8 +397,9 @@
                 mostrarContenidoEmbarcaciones.style.display = 'block';
                 mostrarContenidoRepuestos.style.display = 'none';
                 mostrarContenidoEmpleados.style.display = 'none';
+                mostrarContenidoFacturas.style.display = 'none';
                 
-                opcionMenu.className = "desactive-menu";
+                opcionCliente.className = "desactive-menu";
                 opcionBarco.className = "active-menu";
                 opcionRepuesto.className = "desactive-menu";
                 opcionEmpleado.className = "desactive-menu";
@@ -344,8 +412,9 @@
                 mostrarContenidoEmbarcaciones.style.display = 'none';
                 mostrarContenidoRepuestos.style.display = 'block';
                 mostrarContenidoEmpleados.style.display = 'none';
+                mostrarContenidoFacturas.style.display = 'none';
                 
-                opcionMenu.className = "desactive-menu";
+                opcionCliente.className = "desactive-menu";
                 opcionBarco.className = "desactive-menu";
                 opcionRepuesto.className = "active-menu";
                 opcionEmpleado.className = "desactive-menu";
@@ -358,7 +427,9 @@
                 mostrarContenidoEmbarcaciones.style.display = 'none';
                 mostrarContenidoRepuestos.style.display = 'none';
                 mostrarContenidoEmpleados.style.display = 'block';
-                opcionMenu.className = "desactive-menu";
+                mostrarContenidoFacturas.style.display = 'none';
+
+                opcionCliente.className = "desactive-menu";
                 opcionBarco.className = "desactive-menu";
                 opcionRepuesto.className = "desactive-menu";
                 opcionEmpleado.className = "active-menu";
@@ -367,7 +438,13 @@
 
             if(opcion == "factura")
             {
-                opcionMenu.className = "desactive-menu";
+                mostrarContenidoClientes.style.display = 'none';
+                mostrarContenidoEmbarcaciones.style.display = 'none';
+                mostrarContenidoRepuestos.style.display = 'none';
+                mostrarContenidoEmpleados.style.display = 'none';
+                mostrarContenidoFacturas.style.display = 'block';
+
+                opcionCliente.className = "desactive-menu";
                 opcionBarco.className = "desactive-menu";
                 opcionRepuesto.className = "desactive-menu";
                 opcionEmpleado.className = "desactive-menu";
@@ -380,14 +457,18 @@
 
     <script>
     function refrescar(){
+
         mostrarContenidoClientes = document.getElementById("page-wrapper");
         mostrarContenidoEmbarcaciones = document.getElementById("page-wrapper1");
         mostrarContenidoRepuestos = document.getElementById("page-wrapper2");
         mostrarContenidoEmpleados = document.getElementById("page-wrapper3");
+        mostrarContenidoFacturas = document.getElementById("page-wrapper4");
+
         mostrarContenidoClientes.style.display = 'none';
         mostrarContenidoEmbarcaciones.style.display = 'none';
         mostrarContenidoRepuestos.style.display = 'none';
         mostrarContenidoEmpleados.style.display = 'none';
+        mostrarContenidoFacturas.style.display = 'none';
     }
 
     </script>
@@ -424,7 +505,7 @@
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
                     <li class="text-center">
-                        <a href="<?php echo 'temporales/'.$foto; ?>"><img src="<?php echo 'temporales/'.$foto; ?>" class="user-image img-responsive"></a>
+                        <a href="<?php echo 'temporales/perfil/'.$foto; ?>"><img src="<?php echo 'temporales/perfil/'.$foto; ?>" class="user-image img-responsive"></a>
                     </li>
                     <li>
                         <a  id="opcion1" href="#clientes" onClick="activarOpcion('cliente'); cargarAjaxClientes()"><i class="fa fa-group fa-3x"></i>Gestión de Clientes</a>
@@ -439,7 +520,7 @@
                         <a  id="opcion4" href="#empleados" onClick="activarOpcion('empleado'); cargarAjaxEmpleados()"><i class="fa fa-sitemap fa-3x"></i>Gestión de Empleados</a>
                     </li>   
                     <li>
-                        <a  id="opcion5" href="#facturas" onClick="activarOpcion('factura')"><i class="fa fa-clipboard fa-3x"></i>Gestión de Facturas</a>
+                        <a  id="opcion5" href="#facturas" onClick="activarOpcion('factura'); cargarAjaxFacturas()"><i class="fa fa-clipboard fa-3x"></i>Gestión de Facturas</a>
                     </li>
                 </ul>               
             </div>
@@ -503,7 +584,7 @@
                                     <th>Año</th>
                                     <th>Color</th>
                                     <th>Material</th>
-                                    <th>ID Cliente</th>
+                                    <th>Nombre Completo</th>
                                     <th>Fotografia</th>
                                 </tr>
                             </thead>
@@ -536,7 +617,7 @@
                                     <th>Referencia</th>
                                     <th>Descripcion</th>
                                     <th>Importe</th>
-                                    <th>Ganancia</th>
+                                    <th>Ganancia 30% por Importe</th>
                                 </tr>
                             </thead>
                             <tbody id="tablaRepuestos">
@@ -595,6 +676,46 @@
                 </div>
             </div>
         </div> <!-- FIN COTENIDO PARA MOSTRAR LA TABLA DE EMPLEADOS -->
+
+
+        <!-- COTENIDO PARA MOSTRAR LA TABLA DE FACTURAS -->
+        <div id="page-wrapper4" >
+            <div class="row">
+                <div class="col-md-12" id="facturas">
+                    <form name="formEliminar" action="eliminar_facturas.php" method="POST" onSubmit="return validarCheck()">
+                        <table class="table table-bordered text-center">
+                            <h1>Gestion de facturas</h1>
+                            <thead>
+                                <tr class="success">
+                                    <th>Eliminar</th>
+                                    <th>Modificar</th>
+                                    <th>Imprimir</th>
+                                    <th>Numero Factura</th>
+                                    <th>Matricula</th>
+                                    <th>Mano de obra</th>
+                                    <th>Precio hora</th>
+                                    <th>Numero de horas</th>
+                                    <th>Fecha Emision</th>
+                                    <th>Fecha Pago</th>
+                                    <th>Nombre Empleado</th>
+                                    <th>Base imponible</th>
+                                    <th>IVA</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaFacturas">
+                            </tbody>
+                        </table>
+                        <div class="form-group text-center">
+                            <input type="submit" value="Eliminar facturas seleccionadas" class="btn btn-danger">
+                            <input type="reset" value="Deseleccionar Todos" class="btn btn-success">
+                        </div>
+                    </form>
+                    
+                        <?php include("formIntroducir_facturas.php")  ?>
+                </div>
+            </div>
+        </div> <!-- FIN COTENIDO PARA MOSTRAR LA TABLA DE FACTURAS -->
     
 
     </div> <!-- FIN CONTENEDOR GLOBAL -->

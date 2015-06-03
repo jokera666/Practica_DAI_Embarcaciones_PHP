@@ -13,8 +13,5 @@
         $importe = $fila['Importe'];
         $ganancia = $fila['Ganancia'];
         echo '<option value="'.$referencia.'"> '.$descripcion.' </option>';
-        echo '<option value="'.$referencia.'" hidden> '.$importe.' </option>';
-        echo '<option value="'.$referencia.'" hidden> '.$ganancia.' </option>';
-
     }
  ?>

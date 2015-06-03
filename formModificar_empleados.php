@@ -55,7 +55,7 @@
 								<div class="form-group col-lg-12">
 									<label class="col-lg-3 control-label" >DNI</label>
 									<div class="col-lg-6">
-										<input class="form-control" type="text" name="dni" value="'.$dni.'">
+										<input class="form-control" type="text" name="dni" maxlength="9" value="'.$dni.'">
 									</div>
 								</div>
 

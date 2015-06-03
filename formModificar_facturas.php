@@ -29,6 +29,7 @@
 					$matricula = $fila['Matricula'];
 					$manoObra = $fila['Mano_de_Obra'];
 					$precioHora = $fila['Precio_Hora'];
+                    $numHoras = $fila['Num_Horas'];
 					$fechaEmision = $fila['Fecha_Emision'];
 					$fechaPago = $fila['Fecha_Pago'];
 					$idEmpleado = $fila['Id_Empleado'];
@@ -39,13 +40,9 @@
 					echo'<div class="container text-center"> 
 							<form  class="form-horizontal" action="modificar_facturas.php" method="POST" enctype="multipart/form-data">
 							
-							     <div class="form-group col-lg-12">
-                                    <label class="col-lg-3 control-label" >Numero de Factura</label>
-                                    <div class="col-lg-6">
-                                        <input class="form-control" type="text" name="numFactura" value="'.$numFactura.'">
-                                    </div>
-                                </div>
 
+                            <input type="hidden" name="numFactura" value="'.$numFactura.'">
+                            
 							 	<div class="form-group col-lg-12">
                                     <label class="col-lg-3 control-label" >Matricula</label>
                                     <div class="col-lg-6">
@@ -64,10 +61,10 @@
                                 </div>
 
                                   <div class="form-group col-lg-12">
-                                    <label class="col-lg-3 control-label" >Nombre Cliente</label>
+                                    <label class="col-lg-3 control-label" >Nombre Empleado</label>
                                     <div class="col-lg-6">
-                                        <select class="form-control" name="nombreCliente">';
-                                            $consulta = "SELECT Id_Cliente, Nombre, Apellido1,Apellido2 FROM CLIENTES";
+                                        <select class="form-control" name="nombreEmpleado">';
+                                            $consulta = "SELECT Id_Empleado, Nombre, Apellido1,Apellido2 FROM EMPLEADOS";
                                             $resultado = $conexion->query($consulta);
                                             $rows = $resultado->fetchAll();
 
@@ -76,7 +73,7 @@
                                                 $nombre = $fila['Nombre'];
                                                 $apellido1 = $fila['Apellido1'];
                                                 $apellido2 = $fila['Apellido2'];
-                                                $idcliente = $fila['Id_Cliente'];
+                                                $idEmpleado = $fila['Id_Empleado'];
                                                 echo '<option value="'.$idEmpleado.'">'.$nombre.' '.$apellido1.' '.$apellido2.' </option>';
                                             }
                                   echo '</select>';
@@ -87,14 +84,21 @@
                                 <div class="form-group col-lg-12">
                                     <label class="col-lg-3 control-label" >Mano de obra</label>
                                     <div class="col-lg-6">
-                                        <input class="form-control" type="number" name="manoObra" value="'.$manoObra.'">
+                                        <input class="form-control" type="number" step="0.01" name="manoObra" value="'.$manoObra.'">
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-lg-12">
+                                    <label class="col-lg-3 control-label" >Numero de horas</label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" type="number" name="numHoras" value="'.$numHoras.'">
                                     </div>
                                 </div>
 
                                 <div class="form-group col-lg-12">
                                     <label class="col-lg-3 control-label" >Precio hora</label>
                                     <div class="col-lg-6">
-                                        <input class="form-control" type="number" name="precioHora" value="'.$precioHora.'">
+                                        <input class="form-control" type="number" step="0.01" name="precioHora" value="'.$precioHora.'">
                                     </div>
                                 </div>
 
@@ -115,7 +119,7 @@
                                 <div class="form-group col-lg-12">
                                     <label class="col-lg-3 control-label" >Base Imponible</label>
                                     <div class="col-lg-6">
-                                        <input class="form-control" type="number" name="baseImponible" value="'.$baseImponible.'">
+                                        <input class="form-control" type="number" step="0.01" name="baseImponible" value="'.$baseImponible.'">
                                     </div>
                                 </div>
 
@@ -130,7 +134,7 @@
                                 <div class="form-group col-lg-12">
                                     <label class="col-lg-3 control-label" >Total</label>
                                     <div class="col-lg-6">
-                                        <input class="form-control" type="number" name="total" value="'.$total.'">
+                                        <input class="form-control" type="number" step="0.01" name="total" value="'.$total.'">
                                     </div>
                                 </div>
 

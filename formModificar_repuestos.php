@@ -6,6 +6,7 @@
 	<title>Editar Repuestos</title>
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
+
 </head>
 	<body>
 	 	<h1>Modificar Repuestos</h1>
@@ -44,14 +45,14 @@
 								<div class="form-group col-lg-12">
 									<label class="col-lg-3 control-label" >Importe</label>
 									<div class="col-lg-6">
-										<input class="form-control" type="text" name="importe" value="'.$importe.'">
+										<input class="form-control" type="number" step="0.01" name="importe" value="'.$importe.'">
 									</div>
 								</div>
 
 								<div class="form-group col-lg-12">
 									<label class="col-lg-3 control-label" >Ganancia</label>
 									<div class="col-lg-6">
-										<input class="form-control" type="text" name="ganancia" value="'.$ganancia.'">
+										<input class="form-control" type="number" step="0.01" name="ganancia" value="'.$ganancia.'">
 									</div>
 								</div>
 

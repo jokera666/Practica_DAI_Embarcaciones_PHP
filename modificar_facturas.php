@@ -8,9 +8,10 @@
 	$inMatricula = $_POST['matriculaEmbarcacion'];
 	$inManoObra = $_POST['manoObra'];
 	$inPrecioHora = $_POST['precioHora'];
+	$inNumHoras = $_POST['numHoras'];
 	$inFechaEmision = $_POST['fechaEmision'];
 	$inFechaPago = $_POST['fechaPago'];
-	$inIdEmpleado = $_POST['nombreCliente'];
+	$inIdEmpleado = $_POST['nombreEmpleado'];
 	$inBaseImponible = $_POST['baseImponible'];
 	$inIva = $_POST['iva'];
 	$inTotal = $_POST['total'];
@@ -19,6 +20,7 @@
 	$sentenciaSQL = "UPDATE FACTURA SET  Matricula 		= '".$inMatricula."', 
 										 Mano_de_Obra	= '".$inManoObra."',
 										 Precio_Hora 	= '".$inPrecioHora."',
+										 Num_Horas 	    = '".$inNumHoras."',
 										 Fecha_Emision 	= '".$inFechaEmision."',
 										 Fecha_Pago  	= '".$inFechaPago."',
 										 Id_Empleado 	= '".$inIdEmpleado."',

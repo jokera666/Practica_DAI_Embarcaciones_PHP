@@ -34,7 +34,6 @@
 					$anyo = $fila['Anyo'];
 					$color = $fila['Color'];
 					$material = $fila['Material'];
-					$id_cliente = $fila['Id_Cliente'];
 					$foto = $fila['Fotografia'];
 
 					echo'<div class="container text-center"> 
@@ -59,18 +58,17 @@
                               echo '</select>';
                               echo '</div>
                               	</div>
-                              	
 								<div class="form-group col-lg-12">
 									<label class="col-lg-3 control-label" >Longitud</label>
 									<div class="col-lg-6">
-										<input class="form-control" type="text" name="longitud" value="'.$longitud.'">
+										<input class="form-control" type="number" name="longitud" value="'.$longitud.'">
 									</div>
 								</div>
 
 								<div class="form-group col-lg-12">
 									<label class="col-lg-3 control-label" >Potencia</label>
 									<div class="col-lg-6">
-										<input class="form-control" type="text" name="potencia" value="'.$potencia.'">
+										<input class="form-control" type="number" name="potencia" value="'.$potencia.'">
 									</div>
 								</div>
 
@@ -84,7 +82,7 @@
 								<div class="form-group col-lg-12">
 									<label class="col-lg-3 control-label" >Año</label>
 									<div class="col-lg-6">
-										<input class="form-control" type="text" name="anyo" value="'.$anyo.'">
+										<input class="form-control" type="number" maxlength="4" name="anyo" value="'.$anyo.'">
 									</div>
 								</div>
 
@@ -99,13 +97,6 @@
 									<label class="col-lg-3 control-label" >Material</label>
 									<div class="col-lg-6">
 										<input class="form-control" type="text" name="material" value="'.$material.'">
-									</div>
-								</div>
-
-								<div class="form-group col-lg-12">
-									<label class="col-lg-3 control-label" >ID Cliente</label>
-									<div class="col-lg-6">
-										<input class="form-control" type="text" name="idcliente" value="'.$id_cliente.'">
 									</div>
 								</div>
 

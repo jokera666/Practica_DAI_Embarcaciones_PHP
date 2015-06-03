@@ -26,7 +26,7 @@ echo'
                                 <div class="form-group col-lg-12">
                                     <label class="col-lg-3 control-label" >DNI</label>
                                     <div class="col-lg-6">
-                                        <input class="form-control" type="text" name="dni">
+                                        <input class="form-control" type="text" maxlength="9" name="dni">
                                     </div>
                                 </div>
 

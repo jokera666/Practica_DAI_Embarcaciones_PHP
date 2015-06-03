@@ -2,6 +2,8 @@
 
 	include("conexionPDO.php");
 	include("seguridad.php");
+	include("eliminar_temporales.php");
+	include("eliminar_temporales_perfil.php");
 
 	//creamos la consulta
 	$consulta = "SELECT * FROM REPUESTOS";

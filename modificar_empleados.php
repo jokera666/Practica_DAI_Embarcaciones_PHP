@@ -15,7 +15,7 @@
 	$inTelefono = $_POST["telefono"];
 	$inEmail = $_POST["email"];
 	$inUsuario = $_POST["usuario"];
-	$inPassword = $_POST["password"];
+	$inPassword = SHA1($_POST["password"]);
 
 
 	//Tratamiento necesario para introducir la imagen en la base de datos

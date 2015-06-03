@@ -154,7 +154,7 @@
                     var anyo      = filaBarco.getElementsByTagName('anyo')[0].firstChild.data;
                     var color     = filaBarco.getElementsByTagName('color')[0].firstChild.data;
                     var material  = filaBarco.getElementsByTagName('material')[0].firstChild.data;
-                    var idcliente = filaBarco.getElementsByTagName('idcliente')[0].firstChild.data;
+                    var nombreCompleto = filaBarco.getElementsByTagName('nombreCompleto')[0].firstChild.data;
                     var foto        = filaBarco.getElementsByTagName('foto')[0].firstChild.data;
                     // Añadimos las filas y las columnas de la tabla
                     tablaEmbarcaciones.innerHTML +='<tr><td>'+borrar+'</td>'+
@@ -166,7 +166,7 @@
                                                    '<td>'+anyo+'</td>'+
                                                    '<td>'+color+'</td>'+
                                                    '<td>'+material+'</td>'+
-                                                   '<td>'+idcliente+'</td>'+
+                                                   '<td>'+nombreCompleto+'</td>'+
                                                    '<td>'+foto+'</td></tr>';
                 }
             }
@@ -253,14 +253,15 @@
                     
                     var borrar        = filaFactura.getElementsByTagName('borrar')[0].firstChild.data;
                     var modificar     = filaFactura.getElementsByTagName('modificar')[0].firstChild.data;
-                    var imprimir     = filaFactura.getElementsByTagName('imprimir')[0].firstChild.data;
+                    var imprimir      = filaFactura.getElementsByTagName('imprimir')[0].firstChild.data;
                     var numFactura    = filaFactura.getElementsByTagName('numFactura')[0].firstChild.data;
                     var matricula     = filaFactura.getElementsByTagName('matricula')[0].firstChild.data;
                     var manoObra      = filaFactura.getElementsByTagName('manoObra')[0].firstChild.data;
                     var precioHora    = filaFactura.getElementsByTagName('precioHora')[0].firstChild.data;
+                    var numHoras      = filaFactura.getElementsByTagName('numHoras')[0].firstChild.data;
                     var fechaEmision  = filaFactura.getElementsByTagName('fechaEmision')[0].firstChild.data;
                     var fechaPago     = filaFactura.getElementsByTagName('fechaPago')[0].firstChild.data;
-                    var idempleado    = filaFactura.getElementsByTagName('idempleado')[0].firstChild.data;
+                    var nombreCompleto    = filaFactura.getElementsByTagName('nombreCompleto')[0].firstChild.data;
                     var baseImponible = filaFactura.getElementsByTagName('baseImponible')[0].firstChild.data;
                     var iva           = filaFactura.getElementsByTagName('iva')[0].firstChild.data;
                     var total         = filaFactura.getElementsByTagName('total')[0].firstChild.data;
@@ -273,9 +274,10 @@
                                                    '<td>'+matricula+'</td>'+
                                                    '<td>'+manoObra+'</td>'+
                                                    '<td>'+precioHora+'</td>'+
+                                                   '<td>'+numHoras+'</td>'+
                                                    '<td>'+fechaEmision+'</td>'+
                                                    '<td>'+fechaPago+'</td>'+
-                                                   '<td>'+idempleado+'</td>'+
+                                                   '<td>'+nombreCompleto+'</td>'+
                                                    '<td>'+baseImponible+'</td>'+
                                                    '<td>'+iva+'</td>'+
                                                    '<td>'+total+'</td></tr>';
@@ -360,12 +362,16 @@
 
     <script>
     function refrescar(){
+
         mostrarContenidoClientes = document.getElementById("page-wrapper");
         mostrarContenidoEmbarcaciones = document.getElementById("page-wrapper1");
         mostrarContenidoRepuestos = document.getElementById("page-wrapper2");
+        mostrarContenidoFacturas = document.getElementById("page-wrapper4");
+        
         mostrarContenidoClientes.style.display = 'none';
         mostrarContenidoEmbarcaciones.style.display = 'none';
         mostrarContenidoRepuestos.style.display = 'none';
+        mostrarContenidoFacturas.style.display = 'none';
     }
 
     </script>
@@ -402,7 +408,7 @@
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
     				<li class="text-center">
-                        <a href="<?php echo 'temporales/'.$foto; ?>"><img src="<?php echo 'temporales/'.$foto; ?>" class="user-image img-responsive"></a>
+                        <a href="<?php echo 'temporales/perfil/'.$foto; ?>"><img src="<?php echo 'temporales/perfil/'.$foto; ?>" class="user-image img-responsive"></a>
     				</li>
                     <li>
                         <a  id="opcion1" href="#clientes" onClick="activarOpcion('cliente'); cargarAjaxClientes()"><i class="fa fa-group fa-3x"></i>Gestión de Clientes</a>
@@ -478,7 +484,7 @@
                                     <th>Año</th>
                                     <th>Color</th>
                                     <th>Material</th>
-                                    <th>ID Cliente</th>
+                                    <th>Nombre Completo</th>
                                     <th>Fotografia</th>
                                 </tr>
                             </thead>
@@ -511,7 +517,7 @@
                                     <th>Referencia</th>
                                     <th>Descripcion</th>
                                     <th>Importe</th>
-                                    <th>Ganancia</th>
+                                    <th>Ganancia 30% por Importe</th>
                                 </tr>
                             </thead>
                             <tbody id="tablaRepuestos">
@@ -545,9 +551,10 @@
                                     <th>Matricula</th>
                                     <th>Mano de obra</th>
                                     <th>Precio hora</th>
+                                    <th>Numero de horas</th>
                                     <th>Fecha Emision</th>
                                     <th>Fecha Pago</th>
-                                    <th>ID Empleado</th>
+                                    <th>Nombre Empleado</th>
                                     <th>Base imponible</th>
                                     <th>IVA</th>
                                     <th>Total</th>
@@ -565,7 +572,7 @@
                         <?php include("formIntroducir_facturas.php")  ?>
                 </div>
             </div>
-        </div> <!-- FIN COTENIDO PARA MOSTRAR LA TABLA DE REPUESTOS -->
+        </div> <!-- FIN COTENIDO PARA MOSTRAR LA TABLA DE FACTURAS -->
     
 
     </div> <!-- FIN CONTENEDOR GLOBAL -->

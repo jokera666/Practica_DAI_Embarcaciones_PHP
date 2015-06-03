@@ -8,12 +8,11 @@
 	$matricula = $_POST["matriculaEmbarcacion"];
 	$manoObra = $_POST["manoObra"];
 	$precioHora = $_POST["precioHora"];
+	$numHoras = $_POST["numHoras"];
 	$fechaEmision = $_POST["fechaEmision"];
 	$fechaPago = $_POST["fechaPago"];
-	$idCliente = $_POST["nombreCliente"];
-	$baseImponible = $_POST["baseImponible"];
-	$iva = $_POST["iva"];
-	$total = $_POST["total"];
+	$Iva = $_POST["iva"];
+	$idEmpleado = $_POST["nombreEmpleado"];
 
 	$setenciaControl = "SELECT COUNT(*) as numeroFacturas FROM FACTURA WHERE Numero_Factura = '".$numFactura."' ";
 	$resultadoControl = $conexion->query($setenciaControl);
@@ -33,17 +32,17 @@
 
 
 
-	$sentenciaSQL = "INSERT INTO FACTURA(Numero_Factura,Matricula,Mano_de_Obra,Precio_Hora,Fecha_Emision,Fecha_Pago,Id_Empleado,Base_Imponible,IVA,Total) 
+	$sentenciaSQL = "INSERT INTO FACTURA(Numero_Factura,Matricula,Mano_de_Obra,Precio_Hora,Num_Horas,Fecha_Emision,Fecha_Pago,IVA,Id_Empleado) 
 					 VALUES ('".$numFactura."', 
 					 		 '".$matricula."', 
 					 		 '".$manoObra."', 
 					 		 '".$precioHora."',
+					 		 '".$numHoras."',
 					 		 '".$fechaEmision."',
 					 		 '".$fechaPago."',
-					 		 '".$idCliente."',
-					 		 '".$baseImponible."',
-					 		 '".$iva."',
-					 		 '".$total."' )";
+					 		 '".$Iva."',
+					 		 '".$idEmpleado."' )";
+	$resultadoSQL = $conexion->query($sentenciaSQL);
 
 	$patron_ref = '/^referencias/';
 	$myArray_ref = array();
@@ -75,7 +74,30 @@
 		//echo $arrayUnidades[$i].' ';
 	}
 
-	$resultado = $conexion->query($sentenciaSQL);
+	$sentencia3SQL = "SELECT SUM(DF.Unidades) as Und_Totales, DF.Referencia, R.Importe, R.Ganancia FROM DETALLE_FACTURA DF,FACTURA  F, REPUESTOS R WHERE DF.Numero_Factura = F.Numero_Factura AND DF.Referencia = R.Referencia GROUP BY DF.Referencia";
+	$resultadoUnidades = $conexion->query($sentencia3SQL);
+	$rows = $resultadoUnidades->fetchAll();
+	$totalLineas = 0;
+	foreach ($rows as $fila3)
+	{
+		$unidades = $fila3['Und_Totales'];
+		$importe  = $fila3['Importe'];
+		$ganancia  = $fila3['Ganancia'];
+		$totalLineas += ($unidades*$importe+$ganancia); // la ganancia esta aplicada previamente fija 30% al importe
+	}
+	echo $totalLineas;
+	$resultadoUnidades = $conexion->query($sentencia3SQL);
+	
+
+	$base_imponible = $totalLineas + $manoObra;
+	$t_TOTAL = $base_imponible*($Iva/100);
+
+	$sentenciaFinal = "UPDATE FACTURA SET Base_Imponible = '".$base_imponible."',
+										  Total 		 = '".$t_TOTAL."'
+					WHERE Numero_Factura = '".$numFactura."' ";
+	echo $sentenciaFinal;
+	$resultado = $conexion->query($sentenciaFinal);
+
 	if(!$resultado)
 	{
 		if($tipo=="Empleado") echo "<script>alert('Error al introducir la factura.'); document.location=('./indexEmpleadoAJAX.php');</script>";
